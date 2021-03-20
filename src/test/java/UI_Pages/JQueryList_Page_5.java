@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
 
+import java.util.List;
+
 public class JQueryList_Page_5 {
 
     public JQueryList_Page_5()
@@ -19,22 +21,29 @@ public class JQueryList_Page_5 {
     @FindBy(xpath = "(//a[.='JQuery List Box'])[2]")
     public WebElement jQueryListMenu;
 
-
     @FindBy(xpath = "//select[@class='form-control pickListSelect pickData']")
     public WebElement beforeNames;
-
 
     @FindBy(xpath = "//button[.='Add']")
     public WebElement addButton;
 
-
     @FindBy(xpath = "//select[@class='form-control pickListSelect pickListResult']")
     public WebElement afterNames;
-    /*
-    @FindBy(xpath = "//button[.='Add']")
-    public WebElement */
 
+    @FindBy(xpath = "(//a[.='Data List Filter'])[2]")
+    public WebElement dataListFilterMenu;
 
+    @FindBy(xpath = "//span[contains(text(),'Email')]")
+    public List<WebElement> emailList;
+
+    @FindBy(xpath = "//h4[contains(text(),'Name')]")
+    public List<WebElement> nameList;
+
+    @FindBy(xpath = "//input[@id='input-search']")
+    public WebElement searchAttendees;
+
+    @FindBy(xpath = "//div[@class='searchable-container']/div")
+    public List<WebElement> styleDisplayLIst;
 
 
 }
