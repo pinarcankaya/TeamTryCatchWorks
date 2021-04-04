@@ -1,7 +1,7 @@
 package UI.Test;
 
 import UI_Pages.AjaxFormPage_Cozum2_Page;
-import UI_Pages.SimpleFormDemo_Page_1;
+import UI_Pages.US01_SimpleFormDemo_Page;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,13 +17,13 @@ import java.util.List;
 
     public class AjaxFormTest_Cozum2 {
 
-        SimpleFormDemo_Page_1 page1;
+        US01_SimpleFormDemo_Page page1;
         AjaxFormPage_Cozum2_Page ajaxFormPage;
         Actions actions;
         WebDriverWait wait;
 
         {
-            page1 = new SimpleFormDemo_Page_1();
+            page1 = new US01_SimpleFormDemo_Page();
             ajaxFormPage = new AjaxFormPage_Cozum2_Page();
             actions = new Actions(Driver.getDriver());
             wait = new WebDriverWait(Driver.getDriver(), 10);

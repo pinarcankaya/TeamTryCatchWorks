@@ -25,16 +25,13 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="971bef70-ef95-4662-9687-accf60a32ea0">
-        <schema name="information_schema" object-types="function, view, table, procedure" />
-        <schema name="mysql" object-types="function, view, table, procedure" />
-        <schema name="newschema" object-types="column, function, view, table, procedure" />
-        <schema name="sys" object-types="function, view, table, procedure" />
+        <schema name="newschema" object-types="table, column, view, function" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="971bef70-ef95-4662-9687-accf60a32ea0">
-      <console name="MySql" type="STANDARD" schema="newschema" session="Main"><![CDATA[select count(region)
+      <console name="MySql" type="STANDARD" schema="newschema" session="Main">select count(region)
 from suppliers
 join products
 on suppliers.supplier_id=products.supplier_id
@@ -48,16 +45,19 @@ from newschema.suppliers
 where  contact_title='Owner';
 
 --customers tablosunda 69 farkli city bulunmaktadir.
-select count(city)
+select *
 from customers;
 group by city
 
-select count(order_id)
+select *
 from orders
 
-select distinct city
-from customers
-
+--ship name inde &quot;Owl&quot; ifadesi gecen  ve city'si london olan 3 farkli kisi oldugunu dogrulayiniz
+select *
+from employees
+join orders
+on orders.employee_id=employees.employee_id
+where ship_name like '%Owl%' and city='London';
 
 --employees tablosundan `Nancy' hangi firmalarin urunlerini satmis? ( kullanilacak tablolar: orders,employees,
 --order_dateils,products,suppliers) Nancy nin toplam 29 urun sattigini dogrulayiniz.
@@ -82,7 +82,25 @@ where first_name='Nancy'
        (orders,order_details,products,suppliers)
        on (orders.employee_id=employees.employee_id  and orders.order_id=order_details.order_id
        and order_details.product_id=products.product_id and products.supplier_id=suppliers.supplier_id)
-       where first_name='Nancy';]]></console>
+       where first_name='Nancy';
+
+
+---ismi A ile başlayan employees.ler kimlerdir ve bu zamana kadar kac urun sattilar
+select *
+from employees
+where first_name like 'A%';
+
+
+--her bir employeenin kac  firmaya satis yaptigini bulunuz?(kullanilacak tablolar: employees, orders,
+-- order_details,products,suppliers)ortalamanin altinda satis yapan employee sayisi 4 tür.
+ --(ortamala hesaplarima göre 239,4 cikti)(bu soruyu cözerken subquery kullanmak isteyebilirsiniz)
+select count(suppliers.company_name) ,first_name,last_name
+from suppliers 
+join products on suppliers.supplier_id=products.supplier_id
+join order_details on products.product_id=order_details.product_id
+join orders on order_details.order_id=orders.order_id
+join employees on orders.employee_id=employees.employee_id
+group by employees.first_name, employees.last_name order by count(suppliers.company_name) desc</console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
