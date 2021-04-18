@@ -11,6 +11,8 @@ import org.testng.annotations.Test;
 import utilities.Driver;
 import utilities.ReusableMethods;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -38,17 +40,16 @@ public class US_08_Table_Data_Download {
         tableDataDownloadPage.searchBox.sendKeys("2012");
 
         ReusableMethods.waitFor(1);
-//
        List<String> list = new ArrayList<>();
         for (WebElement w : tableDataDownloadPage.cityName) {
             list.add(w.getText());
-        }
-//
-   //     Set<String> set = new HashSet<String>(list);//TC sonucu bu
-        //System.out.println(set.size());
-//        Assert.assertEquals(set.size(), 4);
+       }
 
-        //!!!!!!!!!!!!!!!!!hangi sehirden kac tane
+       Set<String> set = new HashSet<String>(list);//TC sonucu bu
+        System.out.println(set.size());
+        Assert.assertEquals(set.size(), 4);
+
+        //==========hangi sehirden kac tane//=================
         System.out.println("List of elements: "+list);
         System.out.println("\n Hangi sehirden kac tane:");
         Set<String> uniqueSet = new HashSet<String>(list);
@@ -56,31 +57,30 @@ public class US_08_Table_Data_Download {
             System.out.println(w + ": " + Collections.frequency(list, w));
         }
 
-//        int count =0;
-//        List<String> list1 = new ArrayList<>();
-//      for(WebElement w:tableDataDownloadPage.cityName) {
-//          list1.add(w.getText());
-//          if (!list1.contains(w.getText())) {
-//              count++;
-//          }
-//      }
-//          System.out.println(count);
-        //  System.out.println(Collections.frequency(list1, w.getText()));
+//*****************2.yol*********************
+        List<String> list1 = new ArrayList<>();
+        for (WebElement w : tableDataDownloadPage.cityName) {
+            String city = w.getText();
+            if (!list1.contains(city)) {
+                list1.add(city);
+            }
+        }
+        System.out.println(list1);
+        System.out.println(list1.size());
 
 
-
-
-
-        ////******ONEMLI BILGI==>frequency methodu tekrar eden elemani sayar
-    /*ArrayList<Character> list = new ArrayList<Character>();
-list.add('a');
-list.add('a');
-list.add('a');
-list.add('a');
-list.add('b');
-list.add('b');
-System.out.println("a" + " karakteri " + Collections.frequency(list, 'a') + " tane..");
-System.out.println("b" + " karakteri " + Collections.frequency(list, 'b') + " tane.."); */
     }
 
+    @Test
+    public void TC02() {
+        tableDataDownloadPage.tableLink.click();
+        tableDataDownloadPage.tableDataDownloadLink.click();
+        ReusableMethods.waitFor(1);
+        tableDataDownloadPage.pdfButton.click();
+
+
+        String filePath="C:\\Users\\pinar\\Downloads\\Selenium Easy - Download Table Data to CSV, Excel, PDF and Print (1).pdf";
+        boolean isDownloaded= Files.exists(Paths.get(filePath));
+        Assert.assertTrue(isDownloaded);
+    }
 }
