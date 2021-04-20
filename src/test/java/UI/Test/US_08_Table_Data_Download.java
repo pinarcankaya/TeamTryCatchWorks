@@ -4,7 +4,7 @@ import UI_Pages.US01_SimpleFormDemo_Page;
 import UI_Pages.US_08_Table_Data_Download_Page;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
-import org.openqa.selenium.Keys;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
@@ -13,11 +13,14 @@ import org.testng.annotations.Test;
 import utilities.Driver;
 import utilities.ReusableMethods;
 
-import java.io.IOException;
+import javax.print.*;
+import javax.print.attribute.PrintRequestAttributeSet;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
+
 
 
 public class US_08_Table_Data_Download {
@@ -26,18 +29,18 @@ public class US_08_Table_Data_Download {
     US01_SimpleFormDemo_Page seleniumEasyPage = new US01_SimpleFormDemo_Page();
     US_08_Table_Data_Download_Page tableDataDownloadPage = new US_08_Table_Data_Download_Page();
 
-    @BeforeTest
-    public void setup() {
-        Driver.getDriver().get("https://www.seleniumeasy.com/test/");
-        Driver.getDriver().manage().window().maximize();
-        Driver.getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        seleniumEasyPage.noThanks.click();
-        action.sendKeys(Keys.PAGE_DOWN).perform();
-        ReusableMethods.waitFor(1);
-        tableDataDownloadPage.tableLink.click();
-        tableDataDownloadPage.tableDataDownloadLink.click();
-        ReusableMethods.waitFor(1);
-    }
+//    @BeforeTest
+//    public void setup() {
+//        Driver.getDriver().get("https://www.seleniumeasy.com/test/");
+//        Driver.getDriver().manage().window().maximize();
+//        Driver.getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        seleniumEasyPage.noThanks.click();
+//        action.sendKeys(Keys.PAGE_DOWN).perform();
+//        ReusableMethods.waitFor(1);
+//        tableDataDownloadPage.tableLink.click();
+//        tableDataDownloadPage.tableDataDownloadLink.click();
+//        ReusableMethods.waitFor(1);
+//    }
 
     @Test
     public void TC01() {
@@ -87,7 +90,7 @@ public class US_08_Table_Data_Download {
     }
 
     @Test
-    public void TC0202()  {
+    public void pdfReader() {
         String filePath = "C:\\Users\\pinar\\Downloads\\Selenium Easy - Download Table Data to CSV, Excel, PDF and Print.pdf";
         String page = "";
 
@@ -103,8 +106,56 @@ public class US_08_Table_Data_Download {
         }
         Assert.assertTrue(page.contains("London"));
 
+    }
+
+    //////////*****************PRINTER************************
+
+    @Test//PDF, yazıcı tarafından desteklenip desteklenmediigini anlamak icin
+    public void printerUyum() throws IOException, PrintException {
+        PrintService service = PrintServiceLookup.lookupDefaultPrintService();
+        int count = 0;
+        for (DocFlavor docFlavor : service.getSupportedDocFlavors()) {
+            if (docFlavor.toString().contains("pdf")) {
+                count++;
+            }
+        }
+        if (count == 0) {
+            System.err.println("PDF not supported by printer: " + service.getName());
+            System.exit(1);
+        } else {
+            System.out.println("PDF is supported by printer: " + service.getName());
+        }
 
     }
+
+
+    @Test
+    public void FilePrinter() throws FileNotFoundException {
+        String filePath = "C:\\Users\\pinar\\Downloads\\Selenium Easy - Download Table Data to CSV, Excel, PDF and Print.pdf";
+        FileInputStream in = new FileInputStream(filePath);
+        Doc doc = new SimpleDoc(in, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
+        PrintService service = PrintServiceLookup.lookupDefaultPrintService();
+
+        try {
+            service.createPrintJob().print(doc, null);
+        } catch (PrintException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+//    @Test
+//    public void pdfWiewer() throws FileNotFoundException {
+//        String filePath="C:\\Users\\pinar\\Downloads\\Selenium Easy - Download Table Data to CSV, Excel, PDF and Print.pdf";
+//        PdfViewer viewer = new PdfViewer();
+////Open input PDF file
+//        viewer.bindPdf(dataDir + filePath);
+////Print PDF document
+//        viewer.printDocument();
+////Close PDF file
+//        viewer.close();
+//
+//    }
 
 
 }
