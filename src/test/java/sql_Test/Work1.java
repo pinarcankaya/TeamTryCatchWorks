@@ -1,14 +1,11 @@
 package sql_Test;
 
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utilities.DatabaseConnector;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-
 
 public class Work1 {
 

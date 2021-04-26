@@ -155,6 +155,9 @@ public class ReusableMethods {
         return hex;
     }
 
+    public static void waitForVisibility(String attribute, int i) {
+    }
+
     // ========== STALE ELEMENT EXCEPTION FIX METHOD  ==========//
 
     public void waitForStaleElement(WebElement element) {

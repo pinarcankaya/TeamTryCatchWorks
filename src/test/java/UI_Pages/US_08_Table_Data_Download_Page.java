@@ -28,4 +28,7 @@ public class US_08_Table_Data_Download_Page {
     @FindBy(xpath ="//a[@class='dt-button buttons-pdf buttons-html5']")
     public WebElement pdfButton;
 
+    @FindBy(xpath ="//a[@class='dt-button buttons-excel buttons-html5']")
+    public WebElement excelButton;
+
 }

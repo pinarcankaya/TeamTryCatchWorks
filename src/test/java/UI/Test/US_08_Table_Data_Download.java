@@ -5,12 +5,16 @@ import UI_Pages.US_08_Table_Data_Download_Page;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 
+import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion;
+import org.apache.poi.ss.usermodel.*;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import utilities.Driver;
+import utilities.ExcelUtil;
 import utilities.ReusableMethods;
 
 import javax.print.*;
@@ -20,7 +24,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-
+import java.util.concurrent.TimeUnit;
 
 
 public class US_08_Table_Data_Download {
@@ -29,18 +33,18 @@ public class US_08_Table_Data_Download {
     US01_SimpleFormDemo_Page seleniumEasyPage = new US01_SimpleFormDemo_Page();
     US_08_Table_Data_Download_Page tableDataDownloadPage = new US_08_Table_Data_Download_Page();
 
-//    @BeforeTest
-//    public void setup() {
-//        Driver.getDriver().get("https://www.seleniumeasy.com/test/");
-//        Driver.getDriver().manage().window().maximize();
-//        Driver.getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-//        seleniumEasyPage.noThanks.click();
-//        action.sendKeys(Keys.PAGE_DOWN).perform();
-//        ReusableMethods.waitFor(1);
-//        tableDataDownloadPage.tableLink.click();
-//        tableDataDownloadPage.tableDataDownloadLink.click();
-//        ReusableMethods.waitFor(1);
-//    }
+    @BeforeTest
+    public void setup() {
+        Driver.getDriver().get("https://www.seleniumeasy.com/test/");
+        Driver.getDriver().manage().window().maximize();
+        Driver.getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        seleniumEasyPage.noThanks.click();
+        action.sendKeys(Keys.PAGE_DOWN).perform();
+        ReusableMethods.waitFor(1);
+        tableDataDownloadPage.tableLink.click();
+        tableDataDownloadPage.tableDataDownloadLink.click();
+        ReusableMethods.waitFor(1);
+    }
 
     @Test
     public void TC01() {
@@ -80,12 +84,14 @@ public class US_08_Table_Data_Download {
 
     @Test
     public void TC02() {
+        tableDataDownloadPage.searchBox.sendKeys("London");
         tableDataDownloadPage.pdfButton.click();
 
         String filePath = "C:\\Users\\pinar\\Downloads\\Selenium Easy - Download Table Data to CSV, Excel, PDF and Print.pdf";
         boolean isDownloaded = Files.exists(Paths.get(filePath));
         ReusableMethods.waitFor(4);
         Assert.assertTrue(isDownloaded);
+
 
     }
 
@@ -142,6 +148,7 @@ public class US_08_Table_Data_Download {
             e.printStackTrace();
         }
 
+
     }
 
 //    @Test
@@ -158,4 +165,14 @@ public class US_08_Table_Data_Download {
 //    }
 
 
+    @Test///devam et
+    public void rrrrr() {
+
+        String excelFile="C:\\Users\\pinar\\Downloads\\Selenium Easy - Download Table Data to CSV, Excel, PDF and Print.xlsx";
+        ExcelUtil excelUtil=new ExcelUtil(excelFile,"Sheet1");
+        List<Map<String,String>> testData=excelUtil.getDataList();
+        excelUtil.getDataList();
+        System.out.println(testData);
+
+    }
 }
