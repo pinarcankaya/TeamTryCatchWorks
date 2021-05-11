@@ -47,6 +47,7 @@ public class Api_Ders02 {
         response.then().assertThat().statusCode(200);
 
         Money moneyPojo = objectMapper.readValue(response.asString(), Money.class);
+
         float tryy = moneyPojo.getRates().getTRY();
         System.out.println(tryy);
         float czk = moneyPojo.getRates().getCZK();

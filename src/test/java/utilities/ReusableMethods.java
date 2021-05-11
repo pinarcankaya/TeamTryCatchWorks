@@ -263,4 +263,22 @@ public class ReusableMethods {
         return myData;
     }
 
+    //////////*********SliderMethod
+    public void setSliderBall(WebElement slider, WebElement output, int target) {
+        Actions actions = new Actions(Driver.getDriver());
+        ReusableMethods.waitFor(1);
+
+        actions.clickAndHold(slider).perform();
+        while (true) {
+            int value = Integer.parseInt(output.getText());
+            if (value == target) break;
+            if (value > target) {
+                actions.sendKeys(Keys.ARROW_LEFT).perform();
+                System.out.println("value_left = " + value);
+            } else {
+                actions.sendKeys(Keys.ARROW_RIGHT).perform();
+                System.out.println("value_right = " + value);
+            }
+        }
+    }
 }

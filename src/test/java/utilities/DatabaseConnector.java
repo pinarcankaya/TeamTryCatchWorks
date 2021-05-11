@@ -19,7 +19,7 @@ public class DatabaseConnector {
 
     public static ResultSet getResultSet(String query) {
 
-       //Connection connection1 = DriverManager.getConnection(connectionUrl,dbusername,dbpassword);
+     //  Connection connection1 = DriverManager.getConnection(connectionUrl,dbusername,dbpassword);
 
         try {
             connection = DriverManager.getConnection(connectionUrl, dbusername, dbpassword);
@@ -45,6 +45,7 @@ public class DatabaseConnector {
         resultSet=getResultSet(query);
         ResultSetMetaData rsdm=resultSet.getMetaData();
         int sizeOfColumns=rsdm.getColumnCount();
+
         List<String> nameOfColumnsList=new ArrayList<>();
         for (int i=1;i<=rsdm.getColumnCount();i++){
             nameOfColumnsList.add(rsdm.getColumnName(i));
@@ -62,6 +63,7 @@ public class DatabaseConnector {
         }
         return listOfResultset;
     }
+
 
 
     public static void closeConnection() {

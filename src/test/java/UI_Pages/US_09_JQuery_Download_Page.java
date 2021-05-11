@@ -32,4 +32,17 @@ public class US_09_JQuery_Download_Page {
     @FindBy(xpath = "//div[@class='ui-progressbar-value ui-corner-left ui-widget-header ui-progressbar-complete ui-corner-right']")
     public WebElement progressBarStyle;
 
+    ///////********
+
+    @FindBy(xpath = "(//a[.='Bootstrap Progress bar'])[2]")
+    public WebElement bootstrapProgressBarLink;
+
+
+    @FindBy(xpath = "//button[@id='cricle-btn']")
+    public WebElement bootstrapDownloadButton;
+
+
+    @FindBy(xpath = "//div[contains(text(),'%')]")
+    public WebElement  yuzdelikDilim;
+
 }
